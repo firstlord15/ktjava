@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title th:text="${deliveryNote.id != null} ? 'Edit DeliveryNote' : 'New DeliveryNote'">Title</title>
+</head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5 mb-5 text-center">
+        <h1 th:text="${deliveryNote.id != null} ? 'Edit DeliveryNote' : 'New DeliveryNote'"></h1>
+      </h1>
+
+      <form th:action="${deliveryNote.id != null} ? @{'/deliveryNotes/update/' + ${deliveryNote.id}} : @{'/deliveryNotes'}" th:method="POST" th:object="${deliveryNote}">
+        <div class="row">
+          <div>
+            <!-- Скрытое поле для ID -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" th:value="${deliveryNote.deliveryNumber != null} ? ${deliveryNote.deliveryNumber} : ''" th:field="*{deliveryNumber}" id="deliveryNumber" placeholder="amount" required>
+              <label for="deliveryNumber">deliveryNumber</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" th:value="${deliveryNote.invoice.id != null} ? ${deliveryNote.invoice.id} : ''" th:field="*{invoice.id}" id="invoiceId" placeholder="invoiceId" required>
+              <label for="invoiceId">invoiceId</label>
+            </div>
+
+            <input class="mt-3 btn btn-outline-success" type="submit" th:value="${deliveryNote.id != null} ? 'Update' : 'Create!'"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
